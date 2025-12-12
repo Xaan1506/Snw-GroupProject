@@ -451,7 +451,8 @@ const wireFilters = () => {
       filters.availability = "all";
       filters.price = "all";
 
-      document.getElementById("filter-location").value = "";
+      const filterLoc = document.getElementById("filter-location");
+      if (filterLoc) filterLoc.value = "";
       document.getElementById("filter-bhk").value = "all";
       document.getElementById("filter-furnishing").value = "all";
       document.getElementById("filter-availability").value = "all";
@@ -471,7 +472,8 @@ const wireHeroSearch = () => {
     filters.price = document.getElementById("hero-price").value;
 
     // sync filter sidebar
-    document.getElementById("filter-location").value = filters.location;
+    const filterLoc = document.getElementById("filter-location");
+    if (filterLoc) filterLoc.value = filters.location;
     document.getElementById("filter-bhk").value = filters.bhk;
     document.getElementById("filter-availability").value = filters.availability;
     document.getElementById("filter-price").value = filters.price;
