@@ -1,4 +1,4 @@
-# 🏠 GSG.Co - Apartment Rental Platform
+# 🏠 NextHome - Apartment Rental Platform
 
 A modern, responsive web application for browsing and renting apartments across major Indian cities. Built with vanilla JavaScript, HTML5, and CSS3.
 
@@ -88,6 +88,7 @@ SNWGROUP/
 │   ├── cursor.js          # Main JavaScript logic
 │   └── unique_images.js   # Image URL reference
 └── README.md              # Project documentation
+|__ assets
 ```
 
 ##  Getting Started
