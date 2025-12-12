@@ -1,0 +1,396 @@
+/* style.css (moved from project root) */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #1a1a1a;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #00bfff;
+}
+
+.search-container {
+    margin: 30px auto;
+    width: 60%;
+    display: flex;
+    gap: 10px;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+}
+
+.search-container button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    background-color: #00bfff;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.search-container button:hover {
+    background-color: #009acd;
+}
+
+/* Filters bar styles added for visible filters below hero */
+.filters-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    background: transparent;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.filters-bar .filter-item {
+    flex: 1 1 180px;
+}
+
+.filters-bar input[type="text"],
+.filters-bar select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.filters-bar .filter-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.filters-bar .btn-outline {
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: white;
+    border: 1px solid rgba(11, 79, 108, 0.12);
+    cursor: pointer;
+    font-weight: 700;
+}
+
+@media (max-width:800px) {
+    .filters-bar {
+        gap: 8px;
+    }
+
+    .filters-bar .filter-item {
+        flex: 1 1 140px;
+    }
+}
+
+/* ------------------ Animations & visual polish ------------------ */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(.995);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes floatText {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.cards-grid .card {
+    opacity: 0;
+    transform: translateY(8px);
+    animation-name: fadeUp;
+    animation-duration: 480ms;
+    animation-fill-mode: both;
+}
+
+/* Stagger entrance for up to 8 items */
+.cards-grid .card:nth-child(1) {
+    animation-delay: 0ms;
+}
+
+.cards-grid .card:nth-child(2) {
+    animation-delay: 80ms;
+}
+
+.cards-grid .card:nth-child(3) {
+    animation-delay: 160ms;
+}
+
+.cards-grid .card:nth-child(4) {
+    animation-delay: 240ms;
+}
+
+.cards-grid .card:nth-child(5) {
+    animation-delay: 320ms;
+}
+
+.cards-grid .card:nth-child(6) {
+    animation-delay: 400ms;
+}
+
+.cards-grid .card:nth-child(7) {
+    animation-delay: 480ms;
+}
+
+.cards-grid .card:nth-child(8) {
+    animation-delay: 560ms;
+}
+
+/* Hero headline subtle float and color accent */
+.hero h1 {
+    animation: floatText 4s ease-in-out infinite;
+    text-shadow: 0 6px 20px rgba(108, 92, 231, 0.06);
+    color: #ffffff;
+}
+
+/* Make search button colorful */
+.search-btn {
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    color: white;
+}
+
+.badge {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent));
+    color: white;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 12px;
+    box-shadow: 0 6px 18px rgba(108, 92, 231, 0.08);
+    transform-origin: center;
+    animation: badgePulse 3s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.03);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Buttons micro-interaction */
+.btn-outline {
+    transition: transform .14s ease, box-shadow .14s ease;
+}
+
+.btn-outline:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(11, 79, 108, 0.08);
+}
+
+/* Slight hover lift for cards already existed; enhance color accent border */
+.card:hover {
+    box-shadow: 0 22px 40px rgba(108, 92, 231, 0.12);
+    border: 1px solid rgba(108, 92, 231, 0.06);
+}
+
+/* Make chips and price slightly more colorful */
+.chip {
+    background: rgba(12, 12, 12, 0.03);
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.price {
+    color: #0b845a;
+    font-weight: 800;
+}
+
+/* Navbar styles moved from index.html (overrides and themed nav) */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(250, 250, 255, 0.9));
+    border-bottom: 1px solid rgba(16, 24, 40, 0.04);
+    backdrop-filter: blur(6px);
+    padding: 8px 0;
+}
+
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    gap: 12px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand .mark {
+    width: 46px;
+    height: 46px;
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.18), transparent), linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-weight: 800;
+    box-shadow: 0 8px 26px rgba(108, 92, 231, 0.12);
+    font-size: 18px;
+    transform: translateZ(0);
+}
+
+.brand .name {
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    color: #111827;
+}
+
+.nav-links {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+/* ensure external nav rules don't override themed nav */
+.nav-inner nav,
+nav.nav-links {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgba(15, 23, 36, 0.75);
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 12px;
+    position: relative;
+    transition: all .18s ease;
+}
+
+.nav-links a:after {
+    content: '';
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 6px;
+    height: 3px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    opacity: 0;
+    transform: translateY(4px) scaleX(0.8);
+    transition: all .24s cubic-bezier(.2, .9, .3, 1);
+}
+
+.nav-links a:hover {
+    color: #0f1724;
+}
+
+.nav-links a:hover:after {
+    opacity: 1;
+    transform: translateY(0) scaleX(1);
+}
+
+.nav-links a.active {
+    color: var(--primary);
+}
+
+.nav-links a.active:after {
+    opacity: 1;
+    transform: translateY(0) scaleX(1);
+}
+
+.nav-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #ffffff, #fff);
+    box-shadow: 0 8px 20px rgba(16, 24, 40, 0.06);
+    cursor: pointer;
+    transition: transform .16s ease, box-shadow .16s ease;
+}
+
+.icon-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(108, 92, 231, 0.08);
+}
+
+.icon-btn.ghost {
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    color: white;
+}
+
+/* Brand Hover Animation */
+.brand:hover .mark {
+    transform: rotate(10deg) scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.brand:hover .name {
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translateX(4px);
+    transition: all 0.3s ease;
+}

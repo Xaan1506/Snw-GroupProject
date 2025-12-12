@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Tests - GSG.Co Apartment Rental</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #6C5CE7;
+            padding-bottom: 10px;
+        }
+
+        .test-suite {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .test-case {
+            padding: 12px;
+            margin: 10px 0;
+            border-left: 4px solid #ddd;
+            background: #f9f9f9;
+        }
+
+        .test-case.pass {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .test-case.fail {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .test-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .test-result {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .summary {
+            background: #6C5CE7;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-value {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .summary-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        button {
+            background: #6C5CE7;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background: #5b4bc4;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧪 GSG.Co - Unit Test Suite</h1>
+
+    <div>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <button onclick="clearResults()">Clear Results</button>
+    </div>
+
+    <div id="test-results"></div>
+    <div id="summary"></div>
+
+    <script src="js/cursor.js"></script>
+    <script src="js/reviews.js"></script>
+    <script>
+        // Test Framework
+        class TestRunner {
+            constructor() {
+                this.results = [];
+            }
+
+            test(name, testFunction) {
+                try {
+                    testFunction();
+                    this.results.push({ name, passed: true, error: null });
+                    return true;
+                } catch (error) {
+                    this.results.push({ name, passed: false, error: error.message });
+                    return false;
+                }
+            }
+
+            assert(condition, message) {
+                if (!condition) {
+                    throw new Error(message || 'Assertion failed');
+                }
+            }
+
+            assertEqual(actual, expected, message) {
+                if (actual !== expected) {
+                    throw new Error(message || `Expected ${expected}, but got ${actual}`);
+                }
+            }
+
+            assertNotNull(value, message) {
+                if (value === null || value === undefined) {
+                    throw new Error(message || 'Value is null or undefined');
+                }
+            }
+
+            assertType(value, type, message) {
+                if (typeof value !== type) {
+                    throw new Error(message || `Expected type ${type}, but got ${typeof value}`);
+                }
+            }
+
+            getResults() {
+                return this.results;
+            }
+
+            getSummary() {
+                const total = this.results.length;
+                const passed = this.results.filter(r => r.passed).length;
+                const failed = total - passed;
+                const passRate = total > 0 ? ((passed / total) * 100).toFixed(1) : 0;
+
+                return { total, passed, failed, passRate };
+            }
+        }
+
+        // Test Suites
+        function runAllTests() {
+            const runner = new TestRunner();
+
+            // Test Suite 1: Data Validation
+            console.log('Running Data Validation Tests...');
+
+            runner.test('Apartments array exists', () => {
+                runner.assertNotNull(apartments, 'Apartments array should exist');
+            });
+
+            runner.test('Apartments array has data', () => {
+                runner.assert(apartments.length > 0, 'Apartments array should not be empty');
+            });
+
+            runner.test('All apartments have required fields', () => {
+                apartments.forEach((apt, index) => {
+                    runner.assertNotNull(apt.id, `Apartment ${index} should have an id`);
+                    runner.assertNotNull(apt.title, `Apartment ${index} should have a title`);
+                    runner.assertNotNull(apt.location, `Apartment ${index} should have a location`);
+                    runner.assertNotNull(apt.city, `Apartment ${index} should have a city`);
+                    runner.assertType(apt.bhk, 'number', `Apartment ${index} BHK should be a number`);
+                    runner.assertType(apt.rent, 'number', `Apartment ${index} rent should be a number`);
+                });
+            });
+
+            runner.test('All apartments have images', () => {
+                apartments.forEach((apt, index) => {
+                    runner.assert(Array.isArray(apt.images), `Apartment ${index} should have images array`);
+                    runner.assert(apt.images.length > 0, `Apartment ${index} should have at least one image`);
+                });
+            });
+
+            runner.test('Apartment IDs are unique', () => {
+                const ids = apartments.map(apt => apt.id);
+                const uniqueIds = new Set(ids);
+                runner.assertEqual(ids.length, uniqueIds.size, 'All apartment IDs should be unique');
+            });
+
+            // Test Suite 2: Reviews System
+            console.log('Running Reviews System Tests...');
+
+            runner.test('getPropertyReviews function exists', () => {
+                runner.assertType(getPropertyReviews, 'function', 'getPropertyReviews should be a function');
+            });
+
+            runner.test('getPropertyReviews returns valid data', () => {
+                const reviews = getPropertyReviews(1);
+                runner.assertNotNull(reviews, 'Reviews should not be null');
+                runner.assertType(reviews.rating, 'number', 'Rating should be a number');
+                runner.assertType(reviews.reviewCount, 'number', 'Review count should be a number');
+                runner.assert(Array.isArray(reviews.reviews), 'Reviews should be an array');
+            });
+
+            runner.test('Rating is within valid range', () => {
+                apartments.forEach(apt => {
+                    const reviews = getPropertyReviews(apt.id);
+                    runner.assert(reviews.rating >= 0 && reviews.rating <= 5,
+                        `Rating for apartment ${apt.id} should be between 0 and 5`);
+                });
+            });
+
+            runner.test('createStarRating returns HTML', () => {
+                const html = createStarRating(4.5);
+                runner.assertType(html, 'string', 'createStarRating should return a string');
+                runner.assert(html.includes('star'), 'HTML should contain star elements');
+            });
+
+            // Test Suite 3: Filter Functions
+            console.log('Running Filter Tests...');
+
+            runner.test('Furnishing labels exist', () => {
+                runner.assertNotNull(furnishingLabels, 'Furnishing labels should exist');
+                runner.assertEqual(furnishingLabels.fully, 'Fully Furnished');
+                runner.assertEqual(furnishingLabels.semi, 'Semi Furnished');
+                runner.assertEqual(furnishingLabels.none, 'Unfurnished');
+            });
+
+            runner.test('All apartments have valid furnishing types', () => {
+                const validTypes = ['fully', 'semi', 'none'];
+                apartments.forEach(apt => {
+                    runner.assert(validTypes.includes(apt.furnishing),
+                        `Apartment ${apt.id} should have valid furnishing type`);
+                });
+            });
+
+            runner.test('All apartments have valid availability', () => {
+                const validAvailability = ['available', 'soon'];
+                apartments.forEach(apt => {
+                    runner.assert(validAvailability.includes(apt.availability),
+                        `Apartment ${apt.id} should have valid availability`);
+                });
+            });
+
+            // Test Suite 4: DOM Functions
+            console.log('Running DOM Function Tests...');
+
+            runner.test('createCard function exists', () => {
+                runner.assertType(createCard, 'function', 'createCard should be a function');
+            });
+
+            runner.test('createCard creates valid element', () => {
+                const card = createCard(apartments[0]);
+                runner.assertNotNull(card, 'Card should be created');
+                runner.assert(card instanceof HTMLElement, 'Card should be an HTML element');
+                runner.assertEqual(card.classList.contains('card'), true, 'Card should have card class');
+            });
+
+            // Display results
+            displayResults(runner.getResults(), runner.getSummary());
+        }
+
+        function displayResults(results, summary) {
+            const resultsDiv = document.getElementById('test-results');
+            const summaryDiv = document.getElementById('summary');
+
+            // Display individual test results
+            let html = '<div class="test-suite"><h2>Test Results</h2>';
+
+            results.forEach(result => {
+                html += `
+          <div class="test-case ${result.passed ? 'pass' : 'fail'}">
+            <div class="test-name">
+              ${result.passed ? '✓' : '✗'} ${result.name}
+            </div>
+            ${result.error ? `<div class="test-result">Error: ${result.error}</div>` : ''}
+          </div>
+        `;
+            });
+
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+
+            // Display summary
+            summaryDiv.innerHTML = `
+        <div class="summary">
+          <div class="summary-item">
+            <div class="summary-value">${summary.total}</div>
+            <div class="summary-label">Total Tests</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-value">${summary.passed}</div>
+            <div class="summary-label">Passed</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-value">${summary.failed}</div>
+            <div class="summary-label">Failed</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-value">${summary.passRate}%</div>
+            <div class="summary-label">Pass Rate</div>
+          </div>
+        </div>
+      `;
+        }
+
+        function clearResults() {
+            document.getElementById('test-results').innerHTML = '';
+            document.getElementById('summary').innerHTML = '';
+        }
+    </script>
+</body>
+
+</html>

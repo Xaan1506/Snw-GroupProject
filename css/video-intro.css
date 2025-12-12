@@ -1,0 +1,218 @@
+/* video-intro.css - Splash Screen Video Intro */
+
+.video-intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+}
+
+.video-intro.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.video-intro video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    visibility: visible;
+}
+
+.video-intro__content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.video-intro__skip {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    padding: 14px 32px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #1f2937;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    font-family: 'Poppins', sans-serif;
+    animation: pulse 1s infinite;
+}
+
+.video-intro__skip:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+}
+
+.video-intro__skip:active {
+    transform: translateY(0);
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(255,255,255,0.28); }
+    50% { box-shadow: 0 4px 22px rgba(255,255,255,0.5); }
+}
+
+/* Top overlay logo (kept visible during intro) */
+.video-intro__logo {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-size: 32px;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    animation: fadeInDown 0.5s ease;
+    z-index: 4;
+}
+
+/* Hide only the header brand during the intro; keep overlay/logo visible at top */
+body.intro-playing .navbar .brand {
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* Center mask to cover embedded logo inside the video frames */
+/* mask removed */
+
+/* Animated intro container (text or visual) kept above mask */
+.video-intro__anim {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.video-intro__anim.playing {
+    opacity: 1;
+    animation: vi-fade 0.25s ease-in;
+}
+
+@keyframes vi-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.video-intro__logo-mark {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #6C5CE7, #FF6B6B);
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Loading overlay during video load */
+.video-intro__loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.video-intro__spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Progress bar */
+.video-intro__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.video-intro__progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #6C5CE7, #FF6B6B);
+    width: 0%;
+    transition: width 0.05s linear;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .video-intro__skip {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+
+    .video-intro__logo {
+        top: 20px;
+        font-size: 24px;
+    }
+
+    .video-intro__logo-mark {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+    }
+}

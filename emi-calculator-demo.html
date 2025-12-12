@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Calculator Demo - NextHome</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cursor.css">
+    <link rel="stylesheet" href="css/emi-calculator.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px 20px;
+        }
+
+        .demo-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .demo-header h1 {
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+
+        .demo-header p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        .demo-card {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+        }
+
+        .property-preview {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .property-preview img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .property-info h3 {
+            margin: 0 0 4px;
+            font-size: 18px;
+            color: #1f2937;
+        }
+
+        .property-info p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .property-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: #6C5CE7;
+            margin-top: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 12px 24px;
+            background: #6C5CE7;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5b4bc4;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🏡 EMI Calculator Demo</h1>
+            <p>Calculate your home loan EMI instantly</p>
+        </div>
+
+        <div class="demo-card">
+            <div class="property-preview">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200&h=200&fit=crop&q=80"
+                    alt="Property">
+                <div class="property-info">
+                    <h3>Spacious 2 BHK Flat</h3>
+                    <p>📍 Powai, Mumbai</p>
+                    <div class="property-price">₹45,00,000</div>
+                </div>
+            </div>
+
+            <div id="emi-calculator-demo"></div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </div>
+    </div>
+
+    <script src="js/emi-calculator.js"></script>
+    <script>
+        // Render EMI calculator
+        document.addEventListener('DOMContentLoaded', function () {
+            const propertyPrice = 4500000; // ₹45 Lac
+            const deposit = 900000; // ₹9 Lac (20% down payment)
+
+            const calculatorHTML = createEMICalculator(propertyPrice, deposit);
+            document.getElementById('emi-calculator-demo').innerHTML = calculatorHTML;
+
+            // Initialize calculator
+            setTimeout(() => {
+                initializeEMICalculator();
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
