@@ -389,7 +389,8 @@ nav.nav-links {
 
 .brand:hover .name {
     background: linear-gradient(90deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
+    background-clip: text;              /* Standard property */
+    -webkit-background-clip: text;      /* Vendor-prefixed for Safari/Chrome */
     -webkit-text-fill-color: transparent;
     transform: translateX(4px);
     transition: all 0.3s ease;
