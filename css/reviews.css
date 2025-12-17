@@ -11,11 +11,11 @@
 
 .rating-value {
     font-weight: 700;
-    color: #f59e0b;
+    color: #2563eb;
 }
 
 .rating-count {
-    color: var(--muted);
+    color: #94a3b8;
     font-size: 13px;
 }
 
@@ -43,11 +43,11 @@
 }
 
 .star--full {
-    color: #f59e0b;
+    color: #2563eb;
 }
 
 .star--half {
-    background: linear-gradient(90deg, #f59e0b 50%, #d1d5db 50%);
+    background: linear-gradient(90deg, #2563eb 50%, #d1d5db 50%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -79,9 +79,9 @@
     align-items: center;
     gap: 12px;
     padding: 16px;
-    background: #fef3c7;
+    background: #eff6ff;
     border-radius: 12px;
-    border: 1px solid #fbbf24;
+    border: 1px solid #bfdbfe;
 }
 
 .reviews-summary-text {
@@ -92,12 +92,12 @@
 .reviews-rating {
     font-size: 24px;
     font-weight: 800;
-    color: #92400e;
+    color: #1e40af;
 }
 
 .reviews-count {
     font-size: 13px;
-    color: #78350f;
+    color: #3730a3;
 }
 
 /* Reviews List */
@@ -110,9 +110,9 @@
 
 .review-item {
     padding: 16px;
-    background: #f9fafb;
+    background: #f8fafc;
     border-radius: 12px;
-    border: 1px solid var(--border);
+    border: 1px solid #e2e8f0;
 }
 
 .review-header {
@@ -132,7 +132,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
+    background: linear-gradient(135deg, #2563eb, #0891b2);
     color: white;
     display: grid;
     place-items: center;
@@ -184,9 +184,9 @@
 }
 
 .review-helpful:hover {
-    background: rgba(15, 107, 255, 0.08);
-    color: var(--primary);
-    border-color: var(--primary);
+    background: rgba(37, 99, 235, 0.08);
+    color: #2563eb;
+    border-color: #2563eb;
 }
 
 .review-helpful-icon {
@@ -210,7 +210,7 @@
     width: 100%;
     margin-top: 16px;
     padding: 12px;
-    background: var(--primary);
+    background: #2563eb;
     color: white;
     border: none;
     border-radius: 10px;
@@ -220,7 +220,7 @@
 }
 
 .btn-write-review:hover {
-    background: var(--primary-dark);
+    background: #1e40af;
     transform: translateY(-2px);
 }
 
@@ -228,9 +228,9 @@
 .review-form {
     margin-top: 20px;
     padding: 20px;
-    background: #f9fafb;
+    background: #f8fafc;
     border-radius: 12px;
-    border: 1px solid var(--border);
+    border: 1px solid #e2e8f0;
 }
 
 .review-form h4 {
@@ -265,7 +265,7 @@
 .form-input:focus,
 .form-textarea:focus {
     outline: none;
-    border-color: var(--primary);
+    border-color: #2563eb;
 }
 
 .form-textarea {
@@ -295,7 +295,7 @@
 .rating-input label:hover,
 .rating-input label:hover~label,
 .rating-input input:checked~label {
-    color: #f59e0b;
+    color: #2563eb;
 }
 
 /* Form Actions */
@@ -316,23 +316,23 @@
 }
 
 .btn-submit-review {
-    background: var(--primary);
+    background: #2563eb;
     color: white;
     border: none;
 }
 
 .btn-submit-review:hover {
-    background: var(--primary-dark);
+    background: #1e40af;
 }
 
 .btn-cancel-review {
     background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
+    color: #0f172a;
+    border: 1px solid #e2e8f0;
 }
 
 .btn-cancel-review:hover {
-    background: #f3f4f6;
+    background: #f8fafc;
 }
 
 /* Responsive */
