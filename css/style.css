@@ -400,4 +400,146 @@ nav.nav-links {
     -webkit-text-fill-color: transparent;
     transform: translateX(4px);
     transition: all 0.3s ease;
+}/* ---------- HERO (Shared 3D) ---------- */
+.hero {
+    max-width: var(--container);
+    margin: 30px auto 20px;
+    padding: 36px 28px;
+    position: relative;
+    color: white;
+    min-height: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+    padding-left: 48px;
+    padding-right: 48px;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.hero-video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 22px;
+    overflow: hidden;
+    z-index: -1;
+    box-shadow: var(--shadow);
+    transform-style: preserve-3d;
+}
+
+.hero-video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.1);
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.3) 0%, transparent 60%),
+    radial-gradient(circle at 90% 80%, rgba(219, 39, 119, 0.3) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.4));
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    transform: translateZ(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+}
+
+/* decorative blurred blobs inside hero */
+.hero::before,
+.hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px) saturate(120%);
+    opacity: 0.7;
+    transform: translateZ(0);
+    pointer-events: none;
+}
+
+.hero::before {
+    width: 520px;
+    height: 520px;
+    left: -120px;
+    top: -80px;
+    background: radial-gradient(circle at 30% 30%, rgba(108, 92, 231, 0.28), rgba(108, 92, 231, 0.06));
+}
+
+.hero::after {
+    width: 420px;
+    height: 420px;
+    right: -80px;
+    bottom: -80px;
+    background: radial-gradient(circle at 70% 70%, rgba(255, 107, 107, 0.18), rgba(0, 191, 166, 0.06));
+}
+
+.hero h1 {
+    text-shadow: 0 10px 30px rgba(2, 6, 23, 0.45);
+    margin: 0;
+    font-size: 44px;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.hero p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 820px;
+    font-size: 16px;
+}
+
+@media (max-width:700px) {
+    .hero {
+      min-height: 360px;
+      padding: 24px
+    }
+    .hero h1 {
+      font-size: 28px;
+    }
+}
+
+/* Ensure hero content elements can be transformed */
+.hero h1, .hero p, .hero-search {
+    transition: transform 0.1s ease-out;
+}
+
+/* ---------- Scroll Reveal Animation ---------- */
+/* Using a stronger 3D flip-in effect for cards */
+@keyframes cardReveal {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.card.revealed {
+    animation: cardReveal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Initially hidden if using JS observer, otherwise defaults to visible */
+.card-hidden {
+    opacity: 0;
 }

@@ -312,10 +312,10 @@ const formatCurrency = (value) => `₹${(value || 0).toLocaleString("en-IN")}`;
 
 const createCard = (apartment) => {
   const card = document.createElement("article");
-  card.className = "card";
+  card.className = "card card-hidden"; // Start hidden for animation
   const fallbackImg = "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1600&auto=format&fit=crop";
   const mainImg = apartment.images?.[0] || fallbackImg;
-  // Use a tiny <img> to detect load errors and set the container background reliably; also fade in on load
+
   card.innerHTML = `
     <div class="card__img" data-fallback="${fallbackImg}">
       <img src="${mainImg}" alt="" onload="this.parentElement.style.backgroundImage='url(${mainImg})'; this.parentElement.style.opacity='1'; this.style.display='none'" onerror="this.parentElement.style.backgroundImage='url(${fallbackImg})'; this.parentElement.style.opacity='1'; this.remove()" style="display:block;width:0;height:0;visibility:hidden;" />
@@ -334,17 +334,14 @@ const createCard = (apartment) => {
       </div>
     </div>
   `;
-  // make the whole card clickable and keyboard accessible (open details modal)
+  // make the whole card clickable and keyboard accessible
   card.setAttribute('role', 'button');
   card.setAttribute('tabindex', '0');
   card.dataset.id = apartment.id;
-  // open modal when image or card clicked; prefer image click for clarity
-  const imgEl = null; // not used; behavior handled by event delegation below
+
   card.addEventListener('click', (e) => {
-    // if user clicked a link or button, ignore
     if (e.target && (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button'))) return;
     openModal(apartment);
-    // Initialize EMI calculator for this apartment
     if (typeof addEMIToModal === 'function') {
       addEMIToModal(apartment);
     }
@@ -352,7 +349,6 @@ const createCard = (apartment) => {
   card.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       openModal(apartment);
-      // Initialize EMI calculator for this apartment
       if (typeof addEMIToModal === 'function') {
         addEMIToModal(apartment);
       }
@@ -362,23 +358,47 @@ const createCard = (apartment) => {
   return card;
 };
 
+// Observer for scroll animation
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+      entry.target.classList.remove('card-hidden');
+      cardObserver.unobserve(entry.target); // Run once
+    }
+  });
+}, {
+  threshold: 0.1, // Trigger when 10% visible
+  rootMargin: "0px 0px -50px 0px"
+});
+
+const observeCards = () => {
+  const cards = document.querySelectorAll('.card.card-hidden');
+  cards.forEach((card, index) => {
+    // Add small stagger delay
+    card.style.animationDelay = (index % 5) * 0.1 + 's';
+    cardObserver.observe(card);
+  });
+};
+
 // Ensure every apartment has a purpose flag (demo): mark a small set as 'buy'
 const buyIds = [4, 7, 24, 29, 33];
 apartments.forEach(a => { a.purpose = buyIds.includes(a.id) ? 'buy' : (a.purpose || 'rent'); });
 
 const renderFeatured = () => {
   const featuredGrid = document.getElementById("featured-grid");
-  if (!featuredGrid) return; // Skip if element doesn't exist
+  if (!featuredGrid) return;
   featuredGrid.innerHTML = "";
   apartments.slice(0, 4).forEach((apartment) => {
     featuredGrid.appendChild(createCard(apartment));
   });
+  observeCards(); // Trigger observer for featured
   bindDetails();
 };
 
 const renderListings = (listings) => {
   const grid = document.getElementById("listings-grid");
-  if (!grid) return; // Skip if element doesn't exist
+  if (!grid) return;
   grid.innerHTML = "";
 
   if (!listings.length) {
@@ -392,6 +412,7 @@ const renderListings = (listings) => {
   const resultsCount = document.getElementById("results-count");
   if (resultsCount) resultsCount.textContent = `${listings.length} properties found`;
 
+  observeCards(); // Trigger observer for listings
   bindDetails();
 };
 
